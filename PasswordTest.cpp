@@ -49,3 +49,21 @@ TEST(PasswordTest, all_upper_case) {
 	bool value = my_password.has_mixed_case("TEST");
 	ASSERT_EQ(value, false);
 }
+
+TEST(PasswordTest, has_empty_password) {
+	Password my_password;
+	bool value = my_password.has_mixed_case("\0");
+	ASSERT_FALSE(value == false);
+}
+
+TEST(PasswordTest, is_underscore_mixedcase) {
+	Password my_password;
+	bool value = my_password.has_mixed_case("Test_Password");
+	ASSERT_TRUE(value == true);
+}
+
+TEST(PasswordTest, not_underscore_mixedcase) {
+	Password my_password;
+	bool value = my_password.has_mixed_case("Test_password");
+	ASSERT_TRUE(value == true);
+}
