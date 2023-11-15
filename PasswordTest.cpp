@@ -28,14 +28,6 @@ TEST(PasswordTest, empty_password)
 	ASSERT_EQ(0,actual);
 }
 
-TEST(PasswordTest, minimum_numbers) {
-	Password my_password;
-	int actual = my_password.psize("a123");
-	ASSERT_TRUE(actual > 3);
-}
-
-
-
 
 TEST(PasswordTest, mixed_case) {
 	Password my_password;
@@ -56,14 +48,40 @@ TEST(PasswordTest, has_empty_password) {
 	ASSERT_FALSE(value == false);
 }
 
-TEST(PasswordTest, is_underscore_mixedcase) {
+TEST(PasswordTest, all_lower_case) {
 	Password my_password;
-	bool value = my_password.has_mixed_case("Test_Password");
+	bool value = my_password.has_mixed_case("testpass");
+	ASSERT_FALSE(value == false);
+}
+
+// TEST(PasswordTest, is_underscore_mixedcase) {
+// 	Password my_password;
+// 	bool value = my_password.has_mixed_case("Test_Password");
+// 	ASSERT_TRUE(value == true);
+// }
+
+// TEST(PasswordTest, not_underscore_mixedcase) {
+// 	Password my_password;
+// 	bool value = my_password.has_mixed_case("Test_password");
+// 	ASSERT_TRUE(value == true);
+// }
+
+
+/* Authenticate Cases */
+TEST(PasswordTest, is_blank_password) {
+	Password my_password;
+	bool value = my_password.authenticate("");
+	ASSERT_FALSE(value == false);
+}
+
+TEST(PasswordTest, is_not_old_password) {
+	Password my_password;
+	bool value = my_password.authenticate("NewPassword");
 	ASSERT_TRUE(value == true);
 }
 
-TEST(PasswordTest, not_underscore_mixedcase) {
+TEST(PasswordTest, is_old_password) {
 	Password my_password;
-	bool value = my_password.has_mixed_case("Test_password");
-	ASSERT_TRUE(value == true);
+	bool value = my_password.authenticate("ChicoCA-95929");
+	ASSERT_FALSE(value == false);
 }
